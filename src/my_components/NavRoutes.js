@@ -3,7 +3,7 @@ import { IndexRoute, Routes, Route } from 'react-router-dom'
 import Home from './Home.js'
 import Projects from './Projects.js'
 import Resume from './Resume.js'
-import Experience from './Experience.js'
+import Notes from './Notes.js'
 
 class NavRoutes extends React.Component{
     render(){
@@ -12,7 +12,7 @@ class NavRoutes extends React.Component{
                 <Route path="/" element={<Home/>}/>
                 <Route path="/Projects" element={<Projects/>}/>
                 <Route path="/Resume" element={<Resume/>}/>
-                <Route path="/Experience" element={<Experience/>}/>
+                <Route path="/Notes" element={<Notes/>}/>
             </Routes>
         )
     }
