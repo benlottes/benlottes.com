@@ -1,6 +1,7 @@
 import React from 'react'
 import NoteSearchBar from './NoteSearchBar'
 import NewNoteButton from './NewNoteButton'
+import NoteList from './NoteList'
 
 class Notes extends React.Component{
     render(){
@@ -9,6 +10,7 @@ class Notes extends React.Component{
                 <h1>This is a Note page!!</h1>
                 <NoteSearchBar />
                 <NewNoteButton />
+                <NoteList />
             </div>
         )
     }
