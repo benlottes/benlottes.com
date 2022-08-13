@@ -23,13 +23,13 @@ connection.once('open', function(){
 });
 
 // GET request for all notes
-noteRoutes.get("/posts", async (req, res) => {
+noteRoutes.get("/Notes", async (req, res) => {
     const notes = await Note.find();
     res.send(notes);
 });
 
 // Find note by id
-noteRoutes.get("/posts/:id", async (req,res) => {
+noteRoutes.get("/Notes/:id", async (req,res) => {
     try{
         const note = await Note.findOne({_id: req.params.id});
         res.send(note);
@@ -39,20 +39,20 @@ noteRoutes.get("/posts/:id", async (req,res) => {
 });
 
 // Create new note in database
-noteRoutes.post("/posts", async (req, res) => {
-    const note = new Note({
-        note_title: req.body.note_title,
-        note_content: req.body.note_content,
-        note_date: new Date(),
-        note_owner: "PLACEHOLDER",
-        note_tags: ["PLACEHOLDER"],
-    });
-    await note.save()
-    res.send(note);
+noteRoutes.post("/Notes", async (req, res) => {
+    const note = new Note(req.body);
+    console.log("Saving note (in post body)...");
+    try{
+        await note.save()
+        res.send(note);
+    } catch (error){
+        console.log(error);
+        res.status(400).send(error);
+    }
 });
 
 // Update note by id
-noteRoutes.patch("/posts/:id", async (req, res) => {
+noteRoutes.patch("/Notes/:id", async (req, res) => {
     try{
         const note = await Note.findOne({_id: req.params.id});
         if(req.body.note_title != null){
@@ -76,7 +76,7 @@ noteRoutes.patch("/posts/:id", async (req, res) => {
 });
 
 // Delete note by id
-noteRoutes.delete("/posts/:id", async (req, res) => {
+noteRoutes.delete("/Notes/:id", async (req, res) => {
     try{
         const note = await Note.findOne({_id: req.params.id});
         await note.remove();
@@ -86,7 +86,7 @@ noteRoutes.delete("/posts/:id", async (req, res) => {
     }
 });
 
-app.use('/Notes', noteRoutes);
+app.use("/",noteRoutes);
 app.listen(PORT, function(){
     console.log(`Server is running on port ${PORT}`);
 });

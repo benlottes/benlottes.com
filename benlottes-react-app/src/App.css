@@ -46,3 +46,8 @@ p {
   border: 4px solid black;
   border-bottom: 4px solid white;
 }
+
+.flexbox-container{
+  display: flex;
+  flex-direction: row;
+}
