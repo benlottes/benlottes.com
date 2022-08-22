@@ -1,21 +1,20 @@
+require("dotenv").config();
 const express = require('express');
 const app = express();
-app.use(express.json());
-
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
+require('./passport')(passport);
 const cors = require('cors');
-
-let Note = require('./note.model');
-
 const mongoose = require('mongoose');
-const noteRoutes = express.Router();
+
+
 const PORT = 4000;
 
+let Note = require('./note.model');
+const noteRoutes = express.Router();
 
-app.use(cors());
-app.use(bodyParser.json());
-
-mongoose.connect('mongodb://127.0.0.1:27017/Notes', { dbName: "notes", useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/Notes', { dbName: "notes", useNewUrlParser: true });
 const connection = mongoose.connection;
 
 connection.once('open', function(){
@@ -86,7 +85,34 @@ noteRoutes.delete("/Notes/:id", async (req, res) => {
     }
 });
 
+app.use(bodyParser.json());
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors())
 app.use("/",noteRoutes);
+
+app.post("/auth/google", function (req, res, next) {
+    passport.authenticate("local", function (err, user, info) {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return res.status(302).json({ redirectUrl: "/register" });
+      }
+      req.logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        //If Successful
+        return res.status(302).json({ redirectUrl: "/" });
+      });
+    })(req, res, next);
+  });
 app.listen(PORT, function(){
     console.log(`Server is running on port ${PORT}`);
 });
