@@ -14,22 +14,22 @@ class NoteList extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = { notes: [] };
+        this.state = { all_notes: [] , displayed_notes: []};
     }
 
     noteList(){
-        return this.state.notes.map(function(currentNote, i){
+        return this.state.all_notes.map(function(currentNote, i){
             return <Note note={currentNote} key={i} />
         })
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/Notes/')
+        axios.get('http://localhost:4000/Notes/loggedin', {withCredentials: true})
             .then(response => {
-                this.setState({ notes: response.data });
+                this.setState({ all_notes: response.data });
             }).catch(function(error){
                 console.log(error);
-            })
+            });
     }
 
     render(){

@@ -4,8 +4,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-require('./passport')(passport);
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
 
@@ -20,12 +20,51 @@ const connection = mongoose.connection;
 connection.once('open', function(){
     console.log("MongoDB database connection established successfully");
 });
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({
+    //store: new FileStore(),
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60000 },
+    useCredentials: true
+}));
+require('./passport.js')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
-// GET request for all notes
-noteRoutes.get("/Notes", async (req, res) => {
-    const notes = await Note.find();
-    res.send(notes);
+app.route('/auth/google').get( async (req, res, next) => {
+    passport.authenticate('google', {scope: ['profile']})(req, res, next);
 });
+app.get('/logout', (req, res, next) => {
+    req.logout(function(err){
+        if(err){
+            console.log(err);
+        }
+        console.log("Logged out");
+        res.redirect('http://localhost:3000/Notes');
+    });
+});
+
+
+app.use(function(req, res, next) {
+    console.log('handling request for: ' + req.url);
+    next();
+  });
+// GET request for all notes
+noteRoutes.get("/Notes/loggedin", async (req, res) => {
+    if(req.user){
+        console.log("User is logged in");
+        console.log(req.user);
+        const notes = await Note.find({user: req.user._id});
+        res.send(notes);
+    } else {
+        console.log("User is not logged in");
+        
+    }
+});
+app.get('/auth/google/callback', passport.authenticate('google', ({ failureRedirect: '/' }, { successRedirect: 'http://localhost:3000/Notes/loggedin' })));
 
 // Find note by id
 noteRoutes.get("/Notes/:id", async (req,res) => {
@@ -39,7 +78,8 @@ noteRoutes.get("/Notes/:id", async (req,res) => {
 
 // Create new note in database
 noteRoutes.post("/Notes", async (req, res) => {
-    const note = new Note(req.body);
+    let note = new Note(req.body);
+    note.owner = req.user._id;
     console.log("Saving note (in post body)...");
     try{
         await note.save()
@@ -85,34 +125,16 @@ noteRoutes.delete("/Notes/:id", async (req, res) => {
     }
 });
 
-app.use(bodyParser.json());
-app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(cors())
+app.get('/loggedin', async (req, res, next) => {
+    res.send(req.isAuthenticated());
+});
+app.use(function(err, req, res, next) {
+    console.log(err);
+});
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use("/",noteRoutes);
 
-app.post("/auth/google", function (req, res, next) {
-    passport.authenticate("local", function (err, user, info) {
-      if (err) {
-        return next(err);
-      }
-      if (!user) {
-        return res.status(302).json({ redirectUrl: "/register" });
-      }
-      req.logIn(user, function (err) {
-        if (err) {
-          return next(err);
-        }
-        //If Successful
-        return res.status(302).json({ redirectUrl: "/" });
-      });
-    })(req, res, next);
-  });
 app.listen(PORT, function(){
     console.log(`Server is running on port ${PORT}`);
+    console.log(app._router.stack);
 });

@@ -1,11 +1,16 @@
-const express = require("express");
-const passport = require("passport");
-const authRoutes = express.Router();
-
-authRoutes.get("/auth/google", passport.authenticate('google', { scope: ['profile', 'email'] }));
-authRoutes.get('/auth/google/callback', passport.authenticate('google', {
-    successRedirect: '/Notes',
-    failureRedirect: '/'
-}));
-
-module.exports = authRoutes;
+module.exports = {  
+    ensureAuthenticated: function(req, res, next){
+        if(req.isAuthenticated()){
+            return next();
+        }
+        req.flash('error_msg', 'You are not logged in');
+        res.redirect('/Notes');
+    },
+    ensureGuest: function(req, res, next){
+        if(!req.isAuthenticated()){
+            return next();
+        }
+        req.flash('error_msg', 'You are already logged in');
+        res.redirect('/Notes');
+    }
+}

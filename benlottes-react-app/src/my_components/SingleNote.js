@@ -10,8 +10,15 @@ class SingleNote extends React.Component{
         this.noteObj = this.props.note;
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleChangeContent = this.handleChangeContent.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
     }
 
+    deleteNote(){
+        const confirmDialog = window.confirm("Are you sure you want to delete this note?");
+        if(confirmDialog){
+            axios.delete('http://localhost:4000/Notes/' + this.noteObj._id);
+        }
+    }
     handleChangeTitle(e){
         //Save note to database
         e.preventDefault();
@@ -39,13 +46,14 @@ class SingleNote extends React.Component{
     render(){
         return (
             <div>
-                <h1>
+                <h1 className="flexbox-container">
                 <input 
                     type="text" 
                     placeholder="Add a title!" 
                     id="title" 
                     value={this.state.title}
                     onChange={this.handleChangeTitle} />
+                <button onClick={this.deleteNote}>X</button>
                 </h1>
                 <textarea
                     placeholder="Content" 
