@@ -12,11 +12,9 @@ let Note = new Schema({
         type: Date
     },
     note_owner: {
-        type: String
+        type: Schema.ObjectId,
+        ref: 'User'
     },
-    note_tags: {
-        type: Array
-    }
 });
 
 module.exports = mongoose.model('Note', Note);

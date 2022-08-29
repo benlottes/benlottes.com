@@ -11,7 +11,7 @@ class Sidebuttons extends React.Component{
             </div><div name="resume_button">
                 <NavLink to="/Resume">Resume</NavLink>
             </div><div name="notes_button">
-                <NavLink to="/Notes">Notes</NavLink>
+                <NavLink to="/Notes/login">Notes</NavLink>
             </div></>
         )
     }

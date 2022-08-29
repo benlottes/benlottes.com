@@ -17,6 +17,7 @@ class SingleNote extends React.Component{
         const confirmDialog = window.confirm("Are you sure you want to delete this note?");
         if(confirmDialog){
             axios.delete('http://localhost:4000/Notes/' + this.noteObj._id);
+            window.location.reload();
         }
     }
     handleChangeTitle(e){

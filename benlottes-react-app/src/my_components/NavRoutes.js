@@ -13,7 +13,7 @@ class NavRoutes extends React.Component{
                 <Route exact path="/" element={<Home/>}/>
                 <Route path="/Projects" element={<Projects/>}/>
                 <Route path="/Resume" element={<Resume/>}/>
-                <Route path="/Notes" element={<Notes_blank/>}/>
+                <Route path="/Notes/login" element={<Notes_blank/>}/>
                 <Route path="/Notes/loggedin" element={<Notes/>}/>
             </Routes>
         )

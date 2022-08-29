@@ -10,11 +10,20 @@ const Note = (props) => {
     )
 }
 
+function forceUpdate(){
+    console.log("forceUpdate");
+}
+
 class NoteList extends React.Component{
 
     constructor(props){
         super(props);
         this.state = { all_notes: [] , displayed_notes: []};
+    }
+
+    createDisplayedNotes(){
+        let displayed_notes = [];
+        
     }
 
     noteList(){
@@ -30,6 +39,9 @@ class NoteList extends React.Component{
             }).catch(function(error){
                 console.log(error);
             });
+    }
+    componentDidUpdate(){
+        console.log("UPDATE DETECTED");
     }
 
     render(){

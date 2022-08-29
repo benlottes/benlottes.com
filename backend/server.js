@@ -8,7 +8,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
-
 const PORT = 4000;
 
 let Note = require('./note.model');
@@ -43,33 +42,30 @@ app.get('/logout', (req, res, next) => {
             console.log(err);
         }
         console.log("Logged out");
-        res.redirect('http://localhost:3000/Notes');
     });
 });
 
 
-app.use(function(req, res, next) {
-    console.log('handling request for: ' + req.url);
-    next();
-  });
+// app.use(function(req, res, next) {
+//     console.log('handling request for: ' + req.url);
+//     next();
+//   });
 // GET request for all notes
 noteRoutes.get("/Notes/loggedin", async (req, res) => {
     if(req.user){
-        console.log("User is logged in");
-        console.log(req.user);
-        const notes = await Note.find({user: req.user._id});
+        console.log("Logged in: \n" + req.user);
+        const notes = await Note.find({note_owner: req.user.id});
         res.send(notes);
     } else {
         console.log("User is not logged in");
-        
     }
 });
-app.get('/auth/google/callback', passport.authenticate('google', ({ failureRedirect: '/' }, { successRedirect: 'http://localhost:3000/Notes/loggedin' })));
+app.get('/auth/google/callback', passport.authenticate('google', ({ failureRedirect: '/Notes' }, { successRedirect: 'http://localhost:3000/Notes/loggedin' })));
 
 // Find note by id
 noteRoutes.get("/Notes/:id", async (req,res) => {
     try{
-        const note = await Note.findOne({_id: req.params.id});
+        const note = await Note.findOne({note_owner: req.user.id});
         res.send(note);
     } catch {
         res.status(404).send("Note not found");
@@ -79,8 +75,7 @@ noteRoutes.get("/Notes/:id", async (req,res) => {
 // Create new note in database
 noteRoutes.post("/Notes", async (req, res) => {
     let note = new Note(req.body);
-    note.owner = req.user._id;
-    console.log("Saving note (in post body)...");
+    note.note_owner = req.user.id;
     try{
         await note.save()
         res.send(note);
@@ -125,16 +120,12 @@ noteRoutes.delete("/Notes/:id", async (req, res) => {
     }
 });
 
-app.get('/loggedin', async (req, res, next) => {
-    res.send(req.isAuthenticated());
-});
-app.use(function(err, req, res, next) {
-    console.log(err);
-});
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use("/",noteRoutes);
-
+app.use('/loggedin', async (req, res) => {
+    res.send(req.user);
+});
 app.listen(PORT, function(){
     console.log(`Server is running on port ${PORT}`);
-    console.log(app._router.stack);
+    //console.log(app._router.stack);
 });

@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import RecentNoteList from './RecentNoteList'
 
 class NewNoteButton extends React.Component{
 
@@ -8,7 +9,6 @@ class NewNoteButton extends React.Component{
         this.state = { isShown: false, title: "", content: ""};
         this.displayNewNote = this.displayNewNote.bind(this);
         this.saveNote = this.saveNote.bind(this);
-        this.retreiveTags = this.retreiveTags.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -46,20 +46,13 @@ class NewNoteButton extends React.Component{
                 note_title: this.state.title,
                 note_content: this.state.content,
                 note_date: new Date(),
-                note_owner: "",
-                note_tags: []
+                note_owner: undefined,
             };
 
-            axios.post('http://localhost:4000/Notes', note).then(res => console.log(res.data));
-
-            console.log("Saving note...");
-            console.log("Title: " + note.note_title);
-            console.log("Content: " + note.note_content);
-            console.log("Date: " + note.note_date);
-            console.log("Owner: " + note.note_owner);
-            console.log("Tags: " + note.note_tags);
+            axios.post('http://localhost:4000/Notes', note, {withCredentials: true}).then(res => console.log(res.data));
 
             this.setState({title: "", content: ""});
+            window.location.reload();
         }else{
             alert("Title is required");
         } 
