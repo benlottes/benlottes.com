@@ -26,7 +26,7 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 },
+    cookie: { secure: false, expires: 1000 * 60 * 30 },
     useCredentials: true
 }));
 require('./passport.js')(passport);
@@ -54,7 +54,18 @@ app.get('/logout', (req, res, next) => {
 noteRoutes.get("/Notes/loggedin", async (req, res) => {
     if(req.user){
         console.log("Logged in: \n" + req.user);
-        const notes = await Note.find({note_owner: req.user.id});
+        const notes = await Note.find({note_owner: req.user.id}).sort({note_date: -1}).limit(5);
+        res.send(notes);
+    } else {
+        console.log("User is not logged in");
+    }
+});
+noteRoutes.get("/Notes/search/:value", async (req, res) => {
+    if(req.user && req.params.value){
+        console.log(req.params.value);
+        let substrings = req.params.value.split(" ");
+        const regex = substrings.join("|");
+        const notes = await Note.find({ "$or": [{note_title: {$regex: regex, $options: 'i'}}, {note_content: {$regex: regex, $options: 'i'}}], note_owner: req.user.id}).sort({note_date: -1});
         res.send(notes);
     } else {
         console.log("User is not logged in");
@@ -97,9 +108,6 @@ noteRoutes.patch("/Notes/:id", async (req, res) => {
         }
         if(req.body.note_date != null){
             note.note_date = new Date();
-        }
-        if(req.body.note_tags != null){
-            note.note_tags = req.body.note_tags;
         }
 
         await note.save();

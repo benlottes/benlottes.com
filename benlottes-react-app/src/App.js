@@ -9,8 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const App = () => (
     <div className="App">
       <NamePlate/>
+      <Sidebuttons/>
       <div>
-          <Sidebuttons/>
           <NavRoutes/>
       </div>
     </div>

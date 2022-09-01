@@ -1,10 +1,8 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import NoteSearchBar from './NoteSearchBar'
 import NewNoteButton from './NewNoteButton'
 import RecentNoteList from './RecentNoteList'
 import axios from 'axios'
-import { Navigate } from 'react-router-dom'
-
 
 function registerClick(){
     axios.get("http://localhost:4000/logout", {withCredentials: true}).then(res => {
@@ -42,7 +40,6 @@ class Notes extends React.Component{
                 </a>
                 <NoteSearchBar />
                 <NewNoteButton />
-                <RecentNoteList />
             </div>
         )
     }

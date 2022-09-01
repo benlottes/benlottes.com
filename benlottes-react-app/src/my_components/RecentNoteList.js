@@ -10,24 +10,15 @@ const Note = (props) => {
     )
 }
 
-function forceUpdate(){
-    console.log("forceUpdate");
-}
-
 class NoteList extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = { all_notes: [] , displayed_notes: []};
-    }
-
-    createDisplayedNotes(){
-        let displayed_notes = [];
-        
+        this.state = { recent_notes: []};
     }
 
     noteList(){
-        return this.state.all_notes.map(function(currentNote, i){
+        return this.state.recent_notes.map(function(currentNote, i){
             return <Note note={currentNote} key={i} />
         })
     }
@@ -35,7 +26,7 @@ class NoteList extends React.Component{
     componentDidMount(){
         axios.get('http://localhost:4000/Notes/loggedin', {withCredentials: true})
             .then(response => {
-                this.setState({ all_notes: response.data });
+                this.setState({ recent_notes: response.data });
             }).catch(function(error){
                 console.log(error);
             });

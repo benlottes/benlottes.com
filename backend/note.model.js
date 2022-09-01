@@ -17,4 +17,6 @@ let Note = new Schema({
     },
 });
 
+Note.index({note_title: 'text', note_content: 'text'});
+
 module.exports = mongoose.model('Note', Note);
