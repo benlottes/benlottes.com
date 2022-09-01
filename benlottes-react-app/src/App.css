@@ -52,3 +52,8 @@ p {
   flex-direction: row;
 }
 
+.name-plate{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
