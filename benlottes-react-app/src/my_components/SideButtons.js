@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 class Sidebuttons extends React.Component{
     render(){
         return (
-            <><div name="home_button">
+            <div className="button-column"><div name="home_button">
                 <NavLink to="/">Home</NavLink>
             </div><div name="projects_button">
                 <NavLink to="/Projects">Projects</NavLink>
@@ -12,7 +12,7 @@ class Sidebuttons extends React.Component{
                 <NavLink to="/Resume">Resume</NavLink>
             </div><div name="notes_button">
                 <NavLink to="/Notes/login">Notes</NavLink>
-            </div></>
+            </div></div>
         )
     }
 }

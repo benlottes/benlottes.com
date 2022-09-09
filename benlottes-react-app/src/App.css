@@ -51,9 +51,24 @@ p {
   display: flex;
   flex-direction: row;
 }
+.side-buttons{
+  display: flex;
+  flex-direction: row;
+  flex: 100px;
+}
+.button-column{
+  display: flex;
+  flex-direction: column;
+}
 
 .name-plate{
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.page-content{
+  display: flex;
+  justify-content: center;
+  justify-self: left;
 }
