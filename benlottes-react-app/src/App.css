@@ -56,9 +56,11 @@ p {
   flex-direction: row;
   flex: 100px;
 }
-.button-column{
+.button-column > div{
   display: flex;
   flex-direction: column;
+  margin-bottom: 15px;
+  margin-left: 15px;
 }
 
 .name-plate{
@@ -71,4 +73,11 @@ p {
   display: flex;
   justify-content: center;
   justify-self: left;
+}
+
+.resume{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  padding-left: 1000px;
 }

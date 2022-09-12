@@ -5,11 +5,11 @@ import myResume from '../resources/Ben_Lottes_Resume.pdf'
 class Resume extends React.Component{
     render(){
         return (
-            <CenterView className='page-content'>
-                <div name="Resume">
+            <CenterView className='resume'>
+                <div name="Resume" align='center'>
                     <iframe
                         title="file"
-                        style={{ width: '250%', height: '400%' }}
+                        style={{marginLeft: '150px', marginTop: '-75px', width: '250%', height: '800%' }}
                         src={myResume}
                     />
                 </div>
