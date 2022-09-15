@@ -1,7 +1,5 @@
 import React from 'react'
 import NoteSearchBar from './NoteSearchBar'
-import NewNoteButton from './NewNoteButton'
-import RecentNoteList from './RecentNoteList'
 import axios from 'axios'
 
 function registerClick(){
@@ -33,13 +31,16 @@ class Notes extends React.Component{
 
     render(){
         return (
-            <div name="note">
-                {this.state.users_name &&<h1>Welcome, {this.state.users_name}!</h1>}
-                <a href="http://localhost:3000/Notes/login">
-                    <button type="button" onClick={registerClick}>Logout</button>
-                </a>
-                <NoteSearchBar />
-                <NewNoteButton />
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                <div style={{display: 'flex', gap:'20px', alignItems: 'center', justifyContent: 'center', marginLeft: '20px', flexDirection: 'row'}}>
+                    {this.state.users_name &&<h1>Welcome, {this.state.users_name}!</h1>}
+                    <a href="http://localhost:3000/Notes/login" style={{}}>
+                        <button type="button" onClick={registerClick}>Logout</button>
+                    </a>
+                </div>
+                <div style={{display: 'flex', marginLeft: '20px', flexDirection: 'row'}}>
+                    <NoteSearchBar />
+                </div>
             </div>
         )
     }

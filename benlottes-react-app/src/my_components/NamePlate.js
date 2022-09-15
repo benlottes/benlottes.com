@@ -4,13 +4,15 @@ import Image from 'react-bootstrap/Image'
 class NamePlate extends React.Component{
     render(){
         return (
-            <div name="Bio">
-                <div name="name_photo" className="name-plate">
-                    <Image src={require("./../resources/placeholder.jpg")} className="img-thumbnail" style={{width : 75, height: 75, borderRadius: 100/2}} />
-                    <h1 name="my_name">Ben Lottes</h1>
+            <div name="Bio" style={{ display: 'flex', flexDirection: 'column', marginRight: '-300px', alignItems: 'center', justifyContent: 'center'}}>
+                <div name="name_photo" className="name-plate" style={{ display: 'flex', flexDirection: 'column', gap: '10px'}}>
+                    <Image src={require("./../resources/placeholder.jpg")} className="img-thumbnail" style={{width : 350, height: 350, borderRadius: 350/2}} />
+                    <h1 name="my_name" style={{ fontsize: '300%' }}>Ben Lottes</h1>
                 </div>
-                <a name="github_link" href="https://github.com/benlottes" target="_blank" rel="noreferrer noopener">My github</a>
-                <p name="email">benclottes@gmail.com</p>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+                    <p name="email">benclottes@gmail.com</p>
+                    <a name="github_link" href="https://github.com/benlottes" target="_blank" rel="noreferrer noopener">My github</a>
+                </div>
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import SingleNote from './SingleNote'
 import axios from 'axios'
+import NewNoteButton from './NewNoteButton'
 
 const Note = (props) => {
     return (
@@ -48,10 +49,10 @@ class NoteSearchBar extends React.Component{
     }
     noteListRecents(){
         try{
-            if( this.state.value == "" && this.state.recent_notes.length > 0){
-                console.log("updating recents");
-                this.state.should_update_recents = false;
-                this.state.search_notes = [];
+            console.log("running notelistrecents")
+            if(this.state.value === "" && this.state.recent_notes.length > 0){
+                this.should_update_recents = false;
+                this.search_notes = [];
                 return this.state.recent_notes.map(function(currentNote, i){
                     return <Note note={currentNote} key={i} />
                 })
@@ -62,9 +63,9 @@ class NoteSearchBar extends React.Component{
     }
     noteListSearch(){
         try{
-            if(this.state.value != "" && this.state.search_notes.length > 0){
-                this.state.should_update_recents = true;
-                this.state.recent_notes = [];
+            if(this.state.value !== "" && this.state.search_notes.length > 0){
+                this.should_update_recents = true;
+                this.recent_notes = [];
                 return this.state.search_notes.map(function(currentNote, i){
                     return <Note note={currentNote} key={i} />
                 })
@@ -79,13 +80,13 @@ class NoteSearchBar extends React.Component{
 
         let new_val = e.target.value;
         this.setState({value: new_val});
-        if(new_val != ""){
-            this.state.search_notes = [];
-            this.state.recent_notes = [];
+        if(new_val !== ""){
+            this.search_notes = [];
+            this.recent_notes = [];
             this.handleSearch(new_val);
         }else{
-            this.state.search_notes = [];
-            this.state.recent_notes = [];
+            this.search_notes = [];
+            this.recent_notes = [];
             this.updateRecents();
         }
     } 
@@ -97,13 +98,14 @@ class NoteSearchBar extends React.Component{
     render(){
         return (
             <div>
-                <div name="searchbar">
-                    <input type="text" id="searchbar" placeholder="Search..." onChange={this.handleChange} />
-                </div>
-                <div name="search_notes" className="flexbox-container">
+                <div name="search_notes" className="note-grid">
+                    <div>
+                        <div name="searchbar">
+                            <input type="text" id="searchbar" placeholder="Search..." onChange={this.handleChange} />
+                        </div>
+                        <NewNoteButton />
+                    </div>
                     {this.state.search_notes && this.noteListSearch()}
-                </div>
-                <div name="recent_notes" className="flexbox-container">
                     {this.state.recent_notes && this.noteListRecents()}
                 </div>
             </div>

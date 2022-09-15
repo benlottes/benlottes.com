@@ -10,10 +10,6 @@ let User = new Schema({
         type : String,
         required: true
     },
-    lastName : {
-        type : String,
-        required: true
-    },
     createdAt:{
         type: Date,
         default : Date.now

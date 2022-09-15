@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import SingleNote from './SingleNote'
+import CenterView from 'react-bootstrap/Container'
+import CenterGrid from 'react-bootstrap/Container'
 
 const Note = (props) => {
     return (
@@ -19,7 +21,7 @@ class NoteList extends React.Component{
 
     noteList(){
         return this.state.recent_notes.map(function(currentNote, i){
-            return <Note note={currentNote} key={i} />
+            return <Note className="note-grid" note={currentNote} key={i} />
         })
     }
 
@@ -31,15 +33,12 @@ class NoteList extends React.Component{
                 console.log(error);
             });
     }
-    componentDidUpdate(){
-        console.log("UPDATE DETECTED");
-    }
 
     render(){
         return (
-            <div name="displayed_notes" className="flexbox-container">
+            <CenterGrid name="displayed_notes" className="note-grid">
                 {this.noteList()}
-            </div>
+            </CenterGrid>
         )
     }
 }

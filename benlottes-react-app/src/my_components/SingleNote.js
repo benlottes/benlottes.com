@@ -46,9 +46,10 @@ class SingleNote extends React.Component{
     }
     render(){
         return (
-            <div>
+            <div className='note'>
                 <h1 className="flexbox-container">
-                <input 
+                <input
+                    className="note-title" 
                     type="text" 
                     placeholder="Add a title!" 
                     id="title" 
@@ -57,11 +58,12 @@ class SingleNote extends React.Component{
                 <button onClick={this.deleteNote}>X</button>
                 </h1>
                 <textarea
+                    className='note-content'
                     placeholder="Content" 
                     id="content"
                     value={this.state.content}
                     onChange={this.handleChangeContent}
-                    rows={8}
+                    rows={10}
                     cols={42} />
             </div>
         )

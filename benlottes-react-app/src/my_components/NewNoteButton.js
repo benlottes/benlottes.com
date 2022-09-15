@@ -9,6 +9,12 @@ class NewNoteButton extends React.Component{
         this.displayNewNote = this.displayNewNote.bind(this);
         this.saveNote = this.saveNote.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
+    }
+
+    deleteNote(){
+        this.setState({isShown: false});
+        this.setState({title: "", content: ""});
     }
 
     retreiveTags(){
@@ -60,19 +66,22 @@ class NewNoteButton extends React.Component{
     render(){
         return (
             <div>
-                <button id="newnotebutton" onClick={this.displayNewNote}>New Note</button>
+                {!this.state.isShown && (<button id="newnotebutton" onClick={this.displayNewNote}>New Note</button>)}
                 {this.state.isShown && (
-                    <div>
-                        <div>
-                            <h1>
+                    <div className='new-note'>
+                        <div className='note'>
+                            <h1 className="flexbox-container">
                             <input 
+                                className="note-title"
                                 type="text" 
                                 placeholder="Add a title" 
                                 id="title" 
                                 value={this.state.title}
                                 onChange={this.handleChange}/>
+                            <button onClick={this.deleteNote}>X</button>
                             </h1>
                             <textarea
+                                className="note-content"
                                 placeholder="Content" 
                                 id="content"
                                 value={this.state.content}
@@ -80,7 +89,7 @@ class NewNoteButton extends React.Component{
                                 cols={42}
                                 onChange={this.handleChange}/>
                         </div>
-                        <button id="save" onClick={this.saveNote}>Submit</button>
+                        <button id="save" className='submit-button' onClick={this.saveNote}>Submit</button>
                     </div>
                 )}
             </div>

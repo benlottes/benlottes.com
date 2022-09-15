@@ -16,17 +16,17 @@ class ProjectPane extends React.Component{
 
     render(){
         return (
-            <CenterView className='page-content'>
+            <div className='page-content'>
                 <div>
                     <h1 className='page-content'>
                         <a href={this.props.url} target="_blank" rel="noreferrer noopener">{this.props.name}</a>
                     </h1>
                     <div name="name_photo">
-                        <Image src={this.props.image_path} className="img-thumbnail" style={{width : 300, height: 165}} />
+                        <Image src={this.props.image_path} className="img-thumbnail" style={{width : 420, height: 206, scale: '100%'}} />
                     </div>
-                    <p className='page-content'>{this.props.children}</p>
+                    <p className='page-content' style={{ maxWidth: '420px', textAlign: 'justify', textJustify: 'inter-word'}}>{this.props.children}</p>
                 </div>
-            </CenterView>
+            </div>
         )
     }
 }

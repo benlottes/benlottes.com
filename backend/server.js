@@ -54,7 +54,7 @@ app.get('/logout', (req, res, next) => {
 noteRoutes.get("/Notes/loggedin", async (req, res) => {
     if(req.user){
         console.log("Logged in: \n" + req.user);
-        const notes = await Note.find({note_owner: req.user.id}).sort({note_date: -1}).limit(5);
+        const notes = await Note.find({note_owner: req.user.id}).sort({note_date: -1});
         res.send(notes);
     } else {
         console.log("User is not logged in");
