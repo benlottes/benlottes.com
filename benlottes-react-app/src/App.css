@@ -68,6 +68,7 @@ p {
   display: flex;
   flex-direction: row;
   flex: 100px;
+  margin: 0px;
 }
 .button-column > div{
   display: flex;
@@ -94,16 +95,15 @@ p {
   justify-content: center;
   align-items: center;
   height: 80vh;
-  gap: 20px;
+  gap: 80px;
 }
 
 .bio-align{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 80vh;
-  gap: 400px;
 }
 
 .resume{

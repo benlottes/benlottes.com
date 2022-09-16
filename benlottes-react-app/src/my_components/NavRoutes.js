@@ -10,7 +10,7 @@ class NavRoutes extends React.Component{
     render(){
         return (
             <Routes>
-                <Route exact path="/" element={<Home/>}/>
+                <Route exact path="/" style={{margin: '0px'}} element={<Home/>}/>
                 <Route path="/Projects" element={<Projects/>}/>
                 <Route path="/Resume" element={<Resume/>}/>
                 <Route path="/Notes/login" element={<Notes_blank/>}/>

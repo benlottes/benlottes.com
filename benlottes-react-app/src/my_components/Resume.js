@@ -8,7 +8,7 @@ class Resume extends React.Component{
             <CenterView >
                 <div name="Resume" className='resume'>
                     <iframe
-                        title="file"
+                        title="Ben Lottes Resume"
                         style={{ width: '100%', height: '800px' }}
                         src={myResume}
                     />

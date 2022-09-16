@@ -5,7 +5,7 @@ class Notes extends React.Component{
 
     render(){
         return (
-            <CenterView style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', justifyContent: 'center', marginLeft: '20px', height: '80vh'}}>
+            <CenterView style={{display: 'flex', flexDirection: 'column',  alignItems: 'center', justifyContent: 'center', height: '80vh'}}>
                 <h1>Welcome to my Note App!</h1>
                 <a style={{ marginTop: "20px"}} href="http://localhost:4000/auth/google">
                     <button type="button">Login with Google</button>

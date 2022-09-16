@@ -21,8 +21,8 @@ class ProjectPane extends React.Component{
                     <h1 className='page-content'>
                         <a href={this.props.url} target="_blank" rel="noreferrer noopener">{this.props.name}</a>
                     </h1>
-                    <div name="name_photo">
-                        <Image src={this.props.image_path} className="img-thumbnail" style={{width : 420, height: 206, scale: '100%'}} />
+                    <div name="name_photo" >
+                        <Image src={this.props.image_path} className="img-thumbnail" style={{width : 420, height: 206, scale: '100%', borderColor: 'black', borderWidth: '1', borderRadius: '1'}} />
                     </div>
                     <p className='page-content' style={{ maxWidth: '420px', textAlign: 'justify', textJustify: 'inter-word'}}>{this.props.children}</p>
                 </div>

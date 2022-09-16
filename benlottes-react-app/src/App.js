@@ -5,8 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => (
     <div className="App">
-
-      <div className="side-buttons">
+      <div id="content" className="side-buttons">
         <Sidebuttons/>
         <NavRoutes/>
       </div>
