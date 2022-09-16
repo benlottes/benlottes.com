@@ -12,8 +12,8 @@ class Projects extends React.Component{
                              With this project, I was looking to expose myself to the process 
                              of creating a full-stack web app. I selected the MERN stack because
                              I wanted to expose myself to a NO-SQL database, as well as react,
-                             having heard how modular and intuitive it is. In the future I hope 
-                             to improve the app by implementing client side encryption first. I
+                             having heard how modular and intuitive it is. In the future, I first
+                             hope to improve the app by implementing client side encryption. I
                              also want to rework the architecture of the components, at the moment 
                              there are a lot of screen refreshes when updating the notes. I also
                              think the layout could be improved by structuring the CSS better so 
